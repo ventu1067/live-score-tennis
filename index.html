@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wimbledon Live Score 2026</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>THE CHAMPIONSHIPS, WIMBLEDON</h1>
+        <p>Live Scores & Results</p>
+    </header>
+
+    <div id="matches" class="matches-grid"></div>
+
+    <!-- Modal dettaglio -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+                <div id="detail-title"></div>
+            </div>
+            <div id="detail-content"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedMatchId = null;
+        const ws = new WebSocket(`ws://${location.host}/ws`);
+
+        ws.onmessage = (event) => {
+            const matches = JSON.parse(event.data);
+            renderMatches(matches);
+
+            if (selectedMatchId !== null) {
+                const match = matches.find(m => m.id === selectedMatchId);
+                if (match) renderDetail(match);
+            }
+        };
+
+        function renderMatches(matches) {
+            const container = document.getElementById('matches');
+            container.innerHTML = matches.map(m => {
+                // Determina il vincitore se il match è finito
+                const isFinished = m.status === 'TERMINATO';
+                const p1Winner = isFinished && m.sets1 > m.sets2;
+                const p2Winner = isFinished && m.sets2 > m.sets1;
+
+                return `
+                <div class="match-card" onclick="openDetail(${m.id})">
+                    <div class="match-header">
+                        <span><strong>COURT ${m.id + 1}</strong></span>
+                        <span class="${m.status === 'LIVE' ? 'status-live' : 'status-finished'}">
+                            ${m.status === 'LIVE' ? '● LIVE' : 'FINAL'}
+                        </span>
+                        <span>${m.time}</span>
+                    </div>
+                    <div class="match-body">
+                        <div class="player">
+                            <span class="player-name ${p1Winner ? 'winner' : ''}">
+                                ${m.p1} ${p1Winner ? '🏆' : ''}
+                            </span>
+                            <div class="score-detail">
+                                <span class="games">${m.games1}</span>
+                                <span class="sets">Set: ${m.sets1}</span>
+                            </div>
+                        </div>
+                        <div class="player">
+                            <span class="player-name ${p2Winner ? 'winner' : ''}">
+                                ${m.p2} ${p2Winner ? '🏆' : ''}
+                            </span>
+                            <div class="score-detail">
+                                <span class="games">${m.games2}</span>
+                                <span class="sets">Set: ${m.sets2}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function openDetail(id) {
+            selectedMatchId = id;
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            selectedMatchId = null;
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function renderDetail(m) {
+            document.getElementById('detail-title').innerHTML = `
+                <h2>${m.p1} vs ${m.p2}</h2>
+            `;
+
+            let setHistoryHTML = '';
+            if (m.status === 'TERMINATO' && m.set_history.length > 0) {
+                setHistoryHTML = `
+                    <div style="background: #F8F8F8; padding: 20px; border-top: 1px solid #E0E0E0;">
+                        <h4 style="color: #3D2273; margin-bottom: 15px; font-size: 1.1em;">📊 Resoconto Set (${m.p1} - ${m.p2})</h4>
+                        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                            ${m.set_history.map((score, idx) => {
+                                const [p1Score, p2Score] = score.split('-').map(Number);
+                                const p1WonSet = p1Score > p2Score;
+                                const borderColor = p1WonSet ? '#046A3A' : '#3D2273';
+
+                                return `
+                                <div style="background: white; padding: 12px 20px; border-radius: 4px; border: 2px solid ${borderColor}; min-width: 80px; text-align: center;">
+                                    <div style="font-size: 0.75em; color: #999; margin-bottom: 4px;">SET ${idx + 1}</div>
+                                    <div style="font-size: 1.3em; font-weight: 700; color: ${borderColor};">${score}</div>
+                                </div>
+                            `}).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('detail-content').innerHTML = `
+                <div class="detail-score">
+                    <p><strong>Status:</strong> ${m.status}</p>
+                    <p><strong>Match Time:</strong> ${m.time}</p>
+                    <h3>${m.sets1} - ${m.sets2}</h3>
+                    <h4>Games: ${m.games1} - ${m.games2}</h4>
+                </div>
+                ${setHistoryHTML}
+                <div class="events-list">
+                    <h3>Match Events</h3>
+                    ${m.events.length > 0 ? m.events.map(e => `
+                        <div class="event-item">
+                            <span class="event-time">${e.time}</span>
+                            ${e.icon} ${e.text}
+                        </div>
+                    `).join('') : '<p style="color: #999; text-align: center; padding: 20px;">No events recorded yet</p>'}
+                </div>
+            `;
+        }
+
+        window.onclick = (event) => {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) closeModal();
+        };
+    </script>
+</body>
+</html>
