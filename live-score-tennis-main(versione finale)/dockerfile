@@ -1,0 +1,11 @@
+FROM python:3.11-slim
+WORKDIR /app
+# Installa Tornado
+RUN pip install --no-cache-dir tornado
+# Copia tutti i file dell'applicazione
+COPY app.py .
+COPY index.html .
+COPY static/ ./static/
+EXPOSE 8888
+# Comando per avviare l'applicazione
+CMD ["python", "app.py"]

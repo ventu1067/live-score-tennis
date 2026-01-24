@@ -1,0 +1,53 @@
+# COMANDI DOCKER - Tennis Live App
+
+# 1. COSTRUIRE L'IMMAGINE DOCKER
+docker build -t tennis-wimbledon .
+
+# 2. AVVIARE IL CONTAINER
+docker run -d -p 8888:8888 --name tennis-live tennis-wimbledon
+
+# 3. VERIFICARE CHE IL CONTAINER SIA IN ESECUZIONE
+docker ps
+
+# 4. APRIRE IL BROWSER
+# http://localhost:8888
+
+# Fermare il container
+docker stop tennis-live
+
+# Riavviare il container
+docker start tennis-live
+
+# Visualizzare i log del container
+docker logs tennis-live
+
+# Visualizzare i log in tempo reale
+docker logs -f tennis-live
+
+# Entrare nel container (debug)
+docker exec -it tennis-live /bin/bash
+
+# Rimuovere il container
+docker rm tennis-live
+
+# Rimuovere l'immagine
+docker rmi tennis-wimbledon
+
+# Ferma e rimuovi container
+docker stop tennis-live
+docker rm tennis-live
+
+# Ricostruisci l'immagine
+docker build -t tennis-wimbledon .
+
+# Riavvia il container
+docker run -d -p 8888:8888 --name tennis-live tennis-wimbledon
+
+# Se hai un file compose.yaml, usa:
+docker compose up -d
+
+# Ferma i servizi
+docker compose down
+
+# Ricostruisci e riavvia
+docker compose up -d --build

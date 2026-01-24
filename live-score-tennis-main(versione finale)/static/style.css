@@ -1,0 +1,355 @@
+/* Wimbledon Official Color Theme */
+:root {
+    --wimbledon-purple: #3D2273;
+    --wimbledon-purple-dark: #2A1850;
+    --wimbledon-green: #046A3A;
+    --wimbledon-green-dark: #025028;
+    --wimbledon-cream: #FBF3DF;
+    --wimbledon-white: #FFFFFF;
+    --wimbledon-gold: #D4AF37;
+    --wimbledon-gray: #F5F5F5;
+    --wimbledon-text: #1A1A1A;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', 'Helvetica Neue', sans-serif;
+    background: var(--wimbledon-white);
+    color: var(--wimbledon-text);
+    line-height: 1.6;
+}
+
+/* Header Wimbledon Style */
+header {
+    background: var(--wimbledon-purple);
+    padding: 25px 40px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+h1 {
+    font-size: 2.2em;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--wimbledon-white);
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 0.95em;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* Main Container */
+.matches-grid {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Match Card - Wimbledon Score Style */
+.match-card {
+    background: var(--wimbledon-white);
+    border: 1px solid #E0E0E0;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.match-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: var(--wimbledon-purple);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--wimbledon-gray);
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 0.8em;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.match-header span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-live {
+    color: var(--wimbledon-green);
+    font-weight: 600;
+}
+
+.status-finished {
+    color: #999;
+}
+
+.match-body {
+    padding: 0;
+}
+
+/* Player Row - Clean Wimbledon Style */
+.player {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #F0F0F0;
+    gap: 30px;
+}
+
+.player:last-child {
+    border-bottom: none;
+}
+
+.player-name {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--wimbledon-text);
+    letter-spacing: 0.3px;
+}
+
+.score-detail {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.games {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--wimbledon-text);
+    min-width: 30px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+.sets {
+    font-size: 0.85em;
+    color: #666;
+    background: #F8F8F8;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+/* Modal - Wimbledon Detail Style */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background: var(--wimbledon-white);
+    margin: 40px auto;
+    max-width: 800px;
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: var(--wimbledon-purple);
+    padding: 24px 30px;
+    color: var(--wimbledon-white);
+    position: relative;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.6em;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2em;
+    cursor: pointer;
+    color: var(--wimbledon-white);
+    background: none;
+    border: none;
+    transition: opacity 0.2s;
+    line-height: 1;
+    font-weight: 300;
+}
+
+.close-btn:hover {
+    opacity: 0.7;
+}
+
+/* Detail Score Section */
+.detail-score {
+    text-align: center;
+    padding: 35px 30px;
+    background: var(--wimbledon-white);
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.detail-score p {
+    margin: 6px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.detail-score p strong {
+    color: var(--wimbledon-text);
+}
+
+.detail-score h3 {
+    font-size: 4em;
+    margin: 20px 0 10px 0;
+    color: var(--wimbledon-purple);
+    font-weight: 700;
+    font-family: 'Arial', sans-serif;
+}
+
+.detail-score h4 {
+    font-size: 1.3em;
+    color: #666;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+/* Events List - Timeline Style */
+.events-list {
+    padding: 30px;
+    background: #FAFAFA;
+}
+
+.events-list h3 {
+    color: var(--wimbledon-purple);
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.event-item {
+    background: var(--wimbledon-white);
+    padding: 14px 18px;
+    margin: 10px 0;
+    border-radius: 3px;
+    border-left: 3px solid var(--wimbledon-green);
+    color: var(--wimbledon-text);
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-size: 0.95em;
+}
+
+.event-item:hover {
+    border-left-color: var(--wimbledon-purple);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transform: translateX(3px);
+}
+
+.event-time {
+    color: var(--wimbledon-purple);
+    font-size: 0.85em;
+    margin-right: 10px;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+/* Live Indicator Animation */
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.status-live {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 20px 20px;
+    }
+    
+    h1 {
+        font-size: 1.6em;
+    }
+    
+    .matches-grid {
+        padding: 0 15px;
+    }
+    
+    .player {
+        padding: 14px 16px;
+        gap: 15px;
+    }
+    
+    .player-name {
+        font-size: 0.9em;
+    }
+    
+    .games {
+        font-size: 1.4em;
+    }
+    
+    .score-detail {
+        gap: 12px;
+    }
+    
+    .modal-content {
+        margin: 20px 15px;
+    }
+    
+    .detail-score h3 {
+        font-size: 3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .player {
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+    }
+    
+    .score-detail {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+    }
+    
+    .sets {
+        font-size: 0.75em;
+        padding: 3px 10px;
+    }
+}

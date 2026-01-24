@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  tennis-app:
+    build: docker
+    container_name: tennis-wimbledon
+    ports:
+      - "8888:8888"
+    volumes:
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
