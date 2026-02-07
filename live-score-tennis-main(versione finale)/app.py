@@ -4,6 +4,7 @@ import json
 import random
 import time
 import asyncio
+import os
 
 POOL_GIOCATORI = [
     "🇮🇹 Jannik Sinner", "🇪🇸 Carlos Alcaraz", "🇷🇸 Novak Djokovic", "🇷🇺 Daniil Medvedev",
@@ -189,7 +190,6 @@ async def broadcast_updates():
 
 
 def make_app():
-    import os
     return tornado.web.Application([
         (r"/", MainHandler),
         (r"/ws", WSHandler),
