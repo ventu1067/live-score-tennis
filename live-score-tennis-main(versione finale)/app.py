@@ -151,13 +151,6 @@ PLAYERS = genera_accoppiamenti()
 
 matches = [TennisMatch(i, PLAYERS[i * 2], PLAYERS[i * 2 + 1]) for i in range(8)]
 
-print("\n🎾 OTTAVI DI FINALE - ACCOPPIAMENTI:")
-print("=" * 50)
-for i in range(8):
-    print(f"Court {i + 1}: {PLAYERS[i * 2]} vs {PLAYERS[i * 2 + 1]}")
-print("=" * 50 + "\n")
-
-
 
 class MainHandler(tornado.web.RequestHandler):
 
